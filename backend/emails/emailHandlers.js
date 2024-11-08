@@ -6,11 +6,11 @@ export const sendWelcomeEmail = async (email, name, profileUrl) => {
 
   try {
     const response = await mailtrapClient.send({
-      form: sender,
+      from: sender,
       to: recipient,
-      subject: "Welcome to Unlinked",
+      subject: "Welcome to UnLinked",
       html: createWelcomeEmailTemplate(name, profileUrl),
-      category: "Welcome",
+      category: "welcome",
     });
 
     console.log("Welcome Email sent successfully", response);
