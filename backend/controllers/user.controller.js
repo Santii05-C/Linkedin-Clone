@@ -41,8 +41,9 @@ export const getPublicProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const allwedFields = [
+    const allowedFields = [
       "name",
+      "username",
       "headline",
       "about",
       "location",
@@ -52,5 +53,26 @@ export const updateProfile = async (req, res) => {
       "experience",
       "education",
     ];
-  } catch (error) {}
+
+    const updatedData = {};
+
+    for (const field of allowedFields) {
+      if (req.body[field]) {
+        updatedData[field] = req.body[field];
+      }
+    }
+
+    // todo ckeck for the profile img and banner img => upload to cloudinary
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: updatedData },
+      { new: true }
+    ).select("-password");
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error in updateProfile controller:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
