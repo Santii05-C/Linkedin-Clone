@@ -38,3 +38,19 @@ export const getPublicProfile = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const allwedFields = [
+      "name",
+      "headline",
+      "about",
+      "location",
+      "profilePicture",
+      "bannerImg",
+      "skills",
+      "experience",
+      "education",
+    ];
+  } catch (error) {}
+};
