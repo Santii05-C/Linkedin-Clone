@@ -1,5 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
+import Notification from "../models+/notification.model.js";
 
 export const getFeedPosts = async (req, res) => {
   try {
@@ -87,4 +88,30 @@ export const getPostById = async (req, res) => {
     console.error("Error in getPostById controller:", error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+export const createComment = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { content } = req.body;
+
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: { comments: { user: req.user._id, content } },
+      },
+      { new: true }
+    ).populate("author", "name email username headline profilePicture");
+
+    //create a notification if the comment owner is not the post owner
+    if (post.author._id.toString() !== req.user._id.toString()) {
+      const newNotification = new Notification({
+        recipient: post.author,
+        type: "comment",
+        realtedUser: req.user._id,
+        relatedPost: postId,
+      });
+      await newNotification.save();
+    }
+  } catch (error) {}
 };
