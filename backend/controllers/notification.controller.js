@@ -14,7 +14,7 @@ export const getNotifications = async (req, res) => {
   }
 };
 
-export const markNotificationRead = async (req, res) => {
+export const markNotificationAsRead = async (req, res) => {
   const notificatiionId = req.params.id;
   try {
     const notificatiion = await Notification.findByIdAndUpdate(
@@ -26,6 +26,21 @@ export const markNotificationRead = async (req, res) => {
     res.json(notificatiion);
   } catch (error) {
     console.error("Error in markNotificationAsRead controller:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteNotification = async (req, res) => {
+  const notificatiionId = req.params.id;
+  try {
+    const notificatiion = await Notification.findByIdAndDelete({
+      _id: notificatiionId,
+      recipient: req.user._id,
+    });
+
+    res.json({ message: "Notificatiion deleted successfully" });
+  } catch (error) {
+    console.error("Error in deleteNotification controller:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
