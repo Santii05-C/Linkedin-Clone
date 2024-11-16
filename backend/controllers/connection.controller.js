@@ -1,4 +1,5 @@
 import ConnectionRequest from "../models/connectionRequest.model.js";
+import Notification from "../models/notification.model.js";
 
 export const sendConnectionRequest = async (req, res) => {
   try {
@@ -76,6 +77,33 @@ export const acceptConnectionRequest = async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       $addToSet: { connections: request.sender._id },
     });
-    await request.save();
+
+    const notification = new Notification({
+      recipient: request.sender._id,
+      type: "connectionAccepted",
+      relatedUser: userId,
+    });
+
+    await notification.save();
+
+    res.json({ message: "Connection accepted successfully" });
+
+    const senderEmail = request.sender.email;
+    const senderName = request.sender.name;
+    const recipientName = request.recipient.name;
+    const profileUrl =
+      process.env.CLIENT_URL + "/profile/" + request.recipient.username;
+
+    try {
+      await sendConnectionAcceptedEmail(
+        senderEmail,
+        senderName,
+        recipientName,
+        profileUrl
+      );
+    } catch (error) {
+      console.error("Error in sendConnectionAcceptedEmail:", error);
+    }
   } catch (error) {}
 };
+//2:19
