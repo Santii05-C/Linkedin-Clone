@@ -221,5 +221,3 @@ export const getConnectionStatus = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-//2:31
