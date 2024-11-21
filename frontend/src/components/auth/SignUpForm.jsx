@@ -1,11 +1,19 @@
-// const SignUpForm = () => {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
+import { useState } from "react";
 
-//   return <div>SignUpForm</div>;
-// };
+const SignUpForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-// export default SignUpForm;
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    console.log(name, email, username, password);
+  };
+
+  return <form onSubmit={handleSignup}></form>;
+};
+
+export default SignUpForm;
 //2:56
