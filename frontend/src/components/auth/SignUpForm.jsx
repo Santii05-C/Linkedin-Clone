@@ -46,8 +46,13 @@ const SignUpForm = () => {
         className="input input-bordered w-full"
         required
       />
+
+      <button className="btn btn-primary w-full text-white">
+        Agree & Join
+      </button>
     </form>
   );
 };
 
 export default SignUpForm;
+//3:02
