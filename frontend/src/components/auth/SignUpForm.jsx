@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { axiosIntance } from "../../lib/axios.js";
+import { toast } from "react-hot-toast";
+import { Loader } from "lucide-react";
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -6,10 +10,22 @@ const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: signMutation, isLoading } = useMutation({
+    mutationFn: async (data) => {
+      const res = await axiosIntance.post("/auth/signup", data);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Account created successfully");
+    },
+    oneError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
   const handleSignUp = (e) => {
     e.preventDefault();
-
-    console.log(name, email, username, password);
+    signMutation({ name, username, email, password });
   };
 
   return (
@@ -47,12 +63,19 @@ const SignUpForm = () => {
         required
       />
 
-      <button className="btn btn-primary w-full text-white">
-        Agree & Join
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="btn btn-primary w-full text-white"
+      >
+        {isLoading ? (
+          <Loader className="size-5 animate-spin" />
+        ) : (
+          "Agree & Join"
+        )}
       </button>
     </form>
   );
 };
 
 export default SignUpForm;
-//3:02
