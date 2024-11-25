@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "./lib/axios";
 
 function App() {
-  const { data: authUser } = useQuery({
+  const { data: authUser, isLoading } = useQuery({
     queryKey: ["authUser"],
     queryFn: async () => {
       try {
@@ -23,7 +23,7 @@ function App() {
     },
   });
 
-  console.log("authuser", authUser);
+  if (isLoading) return null;
 
   return (
     <Layout>
