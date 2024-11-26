@@ -8,5 +8,5 @@ const Layout = ({ children }) => {
     </div>
   );
 };
-//3:30
+
 export default Layout;
