@@ -50,4 +50,3 @@ const LoginForm = () => {
   );
 };
 export default LoginForm;
-//3:33
