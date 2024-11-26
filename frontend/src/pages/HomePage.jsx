@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
+import Sidebar from "../components/SideBar";
 
 const HomePage = () => {
+  const { data: authUser } = useQuery({
+    queryKey: ["authUser"],
+  });
+
   const { data: recommendedUsers } = useQuery({
     queryKey: ["recommendedUsers"],
     queryFn: async () => {
@@ -18,11 +23,13 @@ const HomePage = () => {
     },
   });
 
-  console.log("recommendedUsers ", recommendedUsers);
-
-  console.log("posts ", posts);
-
-  return <div>HomePage</div>;
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="hidden lg:block lg:col-span-1">
+        <Sidebar user={authUser} />
+      </div>
+    </div>
+  );
 };
 
 export default HomePage;
