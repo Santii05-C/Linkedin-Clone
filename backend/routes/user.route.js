@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/seggestions", protectRoute, getSuggestedConnections);
+router.get("/suggestions", protectRoute, getSuggestedConnections);
 router.get("/:username", protectRoute, getPublicProfile);
 
 router.put("/profile", protectRoute, updateProfile);

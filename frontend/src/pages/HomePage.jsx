@@ -5,7 +5,7 @@ const HomePage = () => {
   const { data: recommendedUsers } = useQuery({
     queryKey: ["recommendedUsers"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/users/seggestions");
+      const res = await axiosInstance.get("/users/suggestions");
       return res.data;
     },
   });
@@ -19,6 +19,7 @@ const HomePage = () => {
   });
 
   console.log("recommendedUsers ", recommendedUsers);
+
   console.log("posts ", posts);
 
   return <div>HomePage</div>;
