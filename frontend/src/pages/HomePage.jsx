@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
 import Sidebar from "../components/SideBar";
+import PostCreation from "../components/PostCreation ";
 
 const HomePage = () => {
   const { data: authUser } = useQuery({
