@@ -20,18 +20,20 @@ export const getFeedPosts = async (req, res) => {
 export const createPost = async (req, res) => {
   try {
     const { content, image } = req.body;
-
     let newPost;
 
     if (image) {
-      const imgReuslt = await cloudinary.uploader.upload(image);
+      const imgResult = await cloudinary.uploader.upload(image);
       newPost = new Post({
         author: req.user._id,
         content,
-        image: imgReuslt.sucure_url,
+        image: imgResult.secure_url,
       });
     } else {
-      newPost = new Post({ author: req.user._id, content });
+      newPost = new Post({
+        author: req.user._id,
+        content,
+      });
     }
 
     await newPost.save();

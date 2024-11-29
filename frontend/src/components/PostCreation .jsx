@@ -21,20 +21,21 @@ const PostCreation = ({ user }) => {
     onSuccess: () => {
       resetForm();
       toast.success("Post created successfully");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (err) => {
-      toast.error(err.response.data.message || "Failes ro create post  ");
+      toast.error(err.response.data.message || "Failed to create post");
     },
   });
 
   const handlePostCreation = async () => {
     try {
       const postData = { content };
-      if (image) postData.image = image;
+      if (image) postData.image = await readFileAsDataURL(image);
 
       createPostMutation(postData);
     } catch (error) {
-      console.log("Error in hanlePostCreation", error);
+      console.error("Error in handlePostCreation:", error);
     }
   };
 
@@ -114,5 +115,4 @@ const PostCreation = ({ user }) => {
     </div>
   );
 };
-
 export default PostCreation;
