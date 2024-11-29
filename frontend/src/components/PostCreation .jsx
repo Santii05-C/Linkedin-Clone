@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { Image } from "lucide-react";
+import { Image, Loader } from "lucide-react";
 
 const PostCreation = ({ user }) => {
   const [content, setContent] = useState("");
@@ -11,7 +11,7 @@ const PostCreation = ({ user }) => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: createPostMutation } = useMutation({
+  const { mutate: createPostMutation, isPending } = useMutation({
     mutationFn: async (postData) => {
       const res = await axiosInstance.post("/posts/create", postData, {
         headers: { "Content-Type": "application/json" },
