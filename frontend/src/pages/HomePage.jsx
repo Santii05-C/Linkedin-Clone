@@ -4,6 +4,7 @@ import Sidebar from "../components/SideBar";
 import PostCreation from "../components/PostCreation ";
 import Post from "../components/Post";
 import { Users } from "lucide-react";
+import RecommendedUser from "../components/RecommendedUser";
 
 const HomePage = () => {
   const { data: authUser } = useQuery({
@@ -25,8 +26,6 @@ const HomePage = () => {
       return res.data;
     },
   });
-
-  console.log("posts", posts);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
