@@ -11,6 +11,7 @@ import {
   ThumbsUp,
   Trash2,
 } from "lucide-react";
+import PostAction from "./PostAction";
 
 const Post = ({ post }) => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
@@ -68,6 +69,8 @@ const Post = ({ post }) => {
     deletePost();
   };
 
+  const handleLikePost = async () => {};
+
   return (
     <div className="bg-secondary rounded-lg shadow mb-4">
       <div className="p-4">
@@ -121,6 +124,14 @@ const Post = ({ post }) => {
             text={`Like (${post.likes.length})`}
             onClick={handleLikePost}
           />
+
+          <PostAction
+            icon={<MessageCircle size={18} />}
+            text={`Comment (${comments.length})`}
+            onClick={() => setShowComments(!showComments)}
+          />
+
+          <PostAction icon={<Share2 size={18} />} text="Share" />
         </div>
       </div>
     </div>
