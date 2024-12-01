@@ -39,13 +39,13 @@ const Post = ({ post }) => {
 
   const { mutate: createComment, isPending: isAddingComment } = useMutation({
     mutationFn: async (newComment) => {
-      await axiosInstance.post(`/posts/${post._id}/comments`, {
+      await axiosInstance.post(`/posts/${post._id}/comment`, {
         content: newComment,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ querykey: ["posts"] });
-      toast.success("Comments added successfully");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      toast.success("Comment added successfully");
     },
     onError: (err) => {
       toast.error(err.response.data.message || "Failed to add comment");
