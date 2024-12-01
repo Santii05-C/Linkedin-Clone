@@ -58,7 +58,7 @@ export const deletePost = async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    //check if the current user is the author of the post
+    // check if the current user is the author of the post
     if (post.author.toString() !== userId.toString()) {
       return res
         .status(403)
@@ -76,7 +76,7 @@ export const deletePost = async (req, res) => {
 
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
-    console.error("Error in deletePost controller:", error);
+    console.log("Error in delete post controller", error.message);
     res.status(500).json({ message: "Server error" });
   }
 };
