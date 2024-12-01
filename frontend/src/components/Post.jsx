@@ -11,6 +11,7 @@ import {
   ThumbsUp,
   Trash2,
 } from "lucide-react";
+
 import PostAction from "./PostAction";
 
 const Post = ({ post }) => {
