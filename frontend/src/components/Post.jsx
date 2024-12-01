@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Loader,
   MessageCircle,
@@ -37,7 +37,7 @@ const Post = ({ post }) => {
     },
   });
 
-  const { mutate: createComment, isPending: isCreatingComment } = useMutation({
+  const { mutate: createComment, isPending: isAddingComment } = useMutation({
     mutationFn: async (newComment) => {
       await axiosInstance.post(`/posts/${post._id}/comments`, {
         content: newComment,
@@ -58,10 +58,6 @@ const Post = ({ post }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-      toast.success("Post liked successfully");
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message || "Failed to like post");
     },
   });
 
@@ -70,7 +66,30 @@ const Post = ({ post }) => {
     deletePost();
   };
 
-  const handleLikePost = async () => {};
+  const handleLikePost = async () => {
+    if (isLikingPost) return;
+    likePost();
+  };
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    if (newComment.trim()) {
+      createComment(newComment);
+      setNewComment("");
+      setComments([
+        ...comments,
+        {
+          content: newComment,
+          user: {
+            _id: authUser._id,
+            name: authUser.name,
+            profilePicture: authUser.profilePicture,
+          },
+          createdAt: new Date(),
+        },
+      ]);
+    }
+  };
 
   return (
     <div className="bg-secondary rounded-lg shadow mb-4">
@@ -135,6 +154,54 @@ const Post = ({ post }) => {
           <PostAction icon={<Share2 size={18} />} text="Share" />
         </div>
       </div>
+
+      {showComments && (
+        <div className="px-4 pb-4">
+          <div className="mb-4 max-h-60 overflow-y-auto">
+            {comments.map((comment) => (
+              <div
+                key={comment._id}
+                className="mb-2 bg-base-100 p-2 rounded flex items-start"
+              >
+                <img
+                  src={comment.user.profilePicture || "/avatar.png"}
+                  alt={comment.user.name}
+                  className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
+                />
+                <div className="flex-grow">
+                  <div className="flex items-center mb-1">
+                    <span className="font-semibold mr-2">
+                      {comment.user.name}
+                    </span>
+                  </div>
+                  <p>{comment.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <form onSubmit={handleAddComment} className="flex items-center">
+            <input
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="flex-grow p-2 rounded-l-full bg-base-100 focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+
+            <button
+              type="submit"
+              className="bg-primary text-white p-2 rounded-r-full hover:bg-primary-dark transition duration-300"
+              disabled={isAddingComment}
+            >
+              {isAddingComment ? (
+                <Loader size={18} className="animate-spin" />
+              ) : (
+                <Send size={18} />
+              )}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
