@@ -34,7 +34,6 @@ const Post = ({ post }) => {
       toast.error(error.message);
     },
   });
-  //4:16
 
   const { mutate: createComment, isPending: isCreatingComment } = useMutation({
     mutationFn: async (newComment) => {
@@ -68,6 +67,7 @@ const Post = ({ post }) => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     deletePost();
   };
+
   return (
     <div className="bg-secondary rounded-lg shadow mb-4">
       <div className="p-4">
@@ -109,9 +109,23 @@ const Post = ({ post }) => {
             className="rounded-lg w-full mb-4"
           />
         )}
+
+        <div className="flex justify-between text-info">
+          <PostAction
+            icon={
+              <ThumbsUp
+                size={18}
+                className={isLiked ? "text-blue-500  fill-blue-300" : ""}
+              />
+            }
+            text={`Like (${post.likes.length})`}
+            onClick={handleLikePost}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Post;
+//4:16
