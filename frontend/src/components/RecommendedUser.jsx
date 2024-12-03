@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { Check, Clock, UserCheck, UserPlus, X } from "lucide-react";
 
 const RecommendedUser = ({ user }) => {
   const queryClient = useQueryClient;
@@ -10,7 +11,7 @@ const RecommendedUser = ({ user }) => {
     queryFn: () => axiosInstance.get(`/connections/status/${user._id}`),
   });
 
-  const { mutate: sendConnectionStatus } = useMutation({
+  const { mutate: sendConnectionRequest } = useMutation({
     mutationFn: (userId) =>
       axiosInstance.post(`/connections/request/${userId}`),
     onSuccess: () => {
@@ -24,7 +25,7 @@ const RecommendedUser = ({ user }) => {
     },
   });
 
-  const { mutate: acceptReaquest } = useMutation({
+  const { mutate: acceptRequest } = useMutation({
     mutationFn: (requestId) =>
       axiosInstance.put(`/connections/accept/${requestId}`),
     onSuccess: () => {
@@ -53,7 +54,68 @@ const RecommendedUser = ({ user }) => {
   });
 
   const renderButton = () => {
-    //4:40
+    if (isLoading) {
+      return (
+        <button
+          className="px-3 py-1 rounded-full text-sm bg-gray-200 text-gray-500"
+          disabled
+        >
+          Loading...
+        </button>
+      );
+    }
+    switch (connectionStatus?.data?.status) {
+      case "pending":
+        return (
+          <button className="px-3 py-1 rounded-full text-sm bg-yellow-500 text-white flex items-center disabled">
+            <Clock size={16} className="mr-1" />
+            Pending
+          </button>
+        );
+      case "received":
+        return (
+          <div className="flex gap-2 justify-center">
+            <button
+              onClick={() => acceptRequest(connectionStatus.data.requestId)}
+              className={`rounded-full p-1 flex items-center justify-center bg-green-500 hover:bg-green-600 text-white`}
+            >
+              <Check size={16} />
+            </button>
+            <button
+              onClick={() => rejectRequest(connectionStatus.data.requestId)}
+              className={`rounded-full p-1 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white`}
+            >
+              <X size={16} />
+            </button>
+          </div>
+        );
+      case "connected":
+        return (
+          <button
+            className="px-3 py-1 rounded-full text-sm bg-green-500 text-white flex items-center"
+            disabled
+          >
+            <UserCheck size={16} className="mr-1" />
+            Connected
+          </button>
+        );
+      default:
+        return (
+          <button
+            className="px-3 py-1 rounded-full text-sm border border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-200 flex items-center"
+            onClick={handleConnect}
+          >
+            <UserPlus size={16} className="mr-1" />
+            Connect
+          </button>
+        );
+    }
+  };
+
+  const handleConnect = () => {
+    if (connectionStatus?.data?.status === "not_connected") {
+      sendConnectionRequest(user._id);
+    }
   };
 
   return (
