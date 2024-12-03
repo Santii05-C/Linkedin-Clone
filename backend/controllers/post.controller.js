@@ -94,7 +94,7 @@ export const getPostById = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-//4:31
+
 export const createComment = async (req, res) => {
   try {
     const postId = req.params.id;
