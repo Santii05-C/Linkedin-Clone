@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { Check, Clock, UserCheck, UserPlus, X } from "lucide-react";
 
 const RecommendedUser = ({ user }) => {
-  const queryClient = useQueryClient;
+  const queryClient = useQueryClient();
+
   const { data: connectionStatus, isLoading } = useQuery({
     queryKey: ["connectionStatus", user._id],
     queryFn: () => axiosInstance.get(`/connections/status/${user._id}`),
@@ -29,7 +30,7 @@ const RecommendedUser = ({ user }) => {
     mutationFn: (requestId) =>
       axiosInstance.put(`/connections/accept/${requestId}`),
     onSuccess: () => {
-      toast.success("Connection accepted successfully");
+      toast.success("Connection request accepted");
       queryClient.invalidateQueries({
         queryKey: ["connectionStatus", user._id],
       });
@@ -43,7 +44,7 @@ const RecommendedUser = ({ user }) => {
     mutationFn: (requestId) =>
       axiosInstance.put(`/connections/reject/${requestId}`),
     onSuccess: () => {
-      toast.success("Connection request rejected ");
+      toast.success("Connection request rejected");
       queryClient.invalidateQueries({
         queryKey: ["connectionStatus", user._id],
       });
@@ -64,10 +65,14 @@ const RecommendedUser = ({ user }) => {
         </button>
       );
     }
+
     switch (connectionStatus?.data?.status) {
       case "pending":
         return (
-          <button className="px-3 py-1 rounded-full text-sm bg-yellow-500 text-white flex items-center disabled">
+          <button
+            className="px-3 py-1 rounded-full text-sm bg-yellow-500 text-white flex items-center"
+            disabled
+          >
             <Clock size={16} className="mr-1" />
             Pending
           </button>
@@ -138,5 +143,4 @@ const RecommendedUser = ({ user }) => {
     </div>
   );
 };
-
 export default RecommendedUser;
