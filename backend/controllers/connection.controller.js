@@ -53,7 +53,7 @@ export const acceptConnectionRequest = async (req, res) => {
       .populate("recipient", "name username");
 
     if (!request) {
-      return res.status(404).json({ message: "Connection request not found " });
+      return res.status(404).json({ message: "Connection request not found" });
     }
 
     // check if the req is for the current user
@@ -107,7 +107,7 @@ export const acceptConnectionRequest = async (req, res) => {
       console.error("Error in sendConnectionAcceptedEmail:", error);
     }
   } catch (error) {
-    console.log("Error in acceptConnectionRequest:", error);
+    console.error("Error in acceptConnectionRequest controller:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
