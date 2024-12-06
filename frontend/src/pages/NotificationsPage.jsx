@@ -52,22 +52,22 @@ const NotificationsPage = () => {
     }
   };
 
-  const renderNotificationContent = (notification) => {
-    switch (notification.type) {
+  const renderNotificationContent = (notifications) => {
+    switch (notifications.type) {
       case "like":
         return (
           <span>
-            <strong>{notification.relatedUser.name}</strong> liked your post
+            <strong>{notifications.relatedUser?.name}</strong> liked your post
           </span>
         );
       case "comment":
         return (
           <span>
             <Link
-              to={`/profile/${notification.relatedUser.username}`}
+              to={`/profile/${notifications.relatedUser?.username}`}
               className="font-bold"
             >
-              {notification.relatedUser.name}
+              {notifications.relatedUser?.name}
             </Link>{" "}
             commented on your post
           </span>
@@ -76,10 +76,10 @@ const NotificationsPage = () => {
         return (
           <span>
             <Link
-              to={`/profile/${notification.relatedUser.username}`}
+              to={`/profile/${notifications.relatedUser.username}`}
               className="font-bold"
             >
-              {notification.relatedUser.name}
+              {notifications.relatedUser?.name}
             </Link>{" "}
             accepted your connection request
           </span>
@@ -137,14 +137,14 @@ const NotificationsPage = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-4">
                       <Link
-                        to={`/profile/${notification.relatedUser.username}`}
+                        to={`/profile/${notification.relatedUser?.username}`}
                       >
                         <img
                           src={
-                            notification.relatedUser.profilePicture ||
+                            notification.relatedUser?.profilePicture ||
                             "/avatar.png"
                           }
-                          alt={notification.relatedUser.name}
+                          alt={notification.relatedUser?.name}
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       </Link>

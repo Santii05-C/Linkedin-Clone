@@ -1,6 +1,6 @@
 import Notification from "../models/notification.model.js";
 
-export const getNotifications = async (req, res) => {
+export const getUserNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({ recipient: req.user._id })
       .sort({ createdAt: -1 })
@@ -9,7 +9,7 @@ export const getNotifications = async (req, res) => {
 
     res.status(200).json(notifications);
   } catch (error) {
-    console.log("Error in getUserNotifications controller:", error);
+    console.error("Error in getUserNotifications controller:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
