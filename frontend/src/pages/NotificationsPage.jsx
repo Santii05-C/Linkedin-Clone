@@ -33,7 +33,7 @@ const NotificationsPage = () => {
       toast.success("Notifications deleted");
     },
   });
-
+  //4:53
   const renderNotificationIcos = (type) => {
     switch (type) {
       case "like":
