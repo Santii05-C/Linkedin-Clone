@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Home, UserPlus, Bell } from "lucide-react";
 
-export default function Sidebar({ user }) {
+export default function SideBar({ user }) {
   return (
     <div className="bg-secondary rounded-lg shadow">
       <div className="p-4 text-center">
@@ -11,12 +11,14 @@ export default function Sidebar({ user }) {
             backgroundImage: `url("${user.bannerImg || "/banner.png"}")`,
           }}
         />
+
         <Link to={`/profile/${user.username}`}>
           <img
             src={user.profilePicture || "/avatar.png"}
             alt={user.name}
             className="w-20 h-20 rounded-full mx-auto mt-[-40px]"
           />
+
           <h2 className="text-xl font-semibold mt-2">{user.name}</h2>
         </Link>
         <p className="text-info">{user.headline}</p>

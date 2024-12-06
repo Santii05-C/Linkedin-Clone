@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { axiosIntance } from "../lib/axios";
+import { axiosInstance } from "../lib/axios";
 import { toast } from "react-hot-toast";
 import {
   ExternalLink,
@@ -13,24 +13,25 @@ import { Link } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { formatDistanceToNow } from "date-fns";
 const NotificationsPage = () => {
-  const { data: authUser } = useQuery({ query: ["authUser"] });
+  const { data: authUser } = useQuery({ querykey: ["authUser"] });
+  console.log(authUser);
 
-  const queryClient = useQueryClient;
+  const queryClient = useQueryClient();
 
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
-    queryFn: () => axiosIntance.get("/notifications"),
+    queryFn: () => axiosInstance.get("/notifications"),
   });
 
   const { mutate: markAsReadMutation } = useMutation({
-    mutationFn: (id) => axiosIntance.put(`/notifications/${id}/read`),
+    mutationFn: (id) => axiosInstance.put(`/notifications/${id}/read`),
     onSuccess: () => {
       queryClient.invalidateQueries(["notifications"]);
     },
   });
 
   const { mutate: deleteNotificationMutation } = useMutation({
-    mutationFn: (id) => axiosIntance.delete(`/notifications/${id}`),
+    mutationFn: (id) => axiosInstance.delete(`/notifications/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["notifications"]);
       toast.success("Notifications deleted");
