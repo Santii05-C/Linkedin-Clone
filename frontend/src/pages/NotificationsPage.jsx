@@ -10,11 +10,11 @@ import {
   UserPlus,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import SideBar from "../components/SideBar";
+import Sidebar from "../components/Sidebar";
 import { formatDistanceToNow } from "date-fns";
+
 const NotificationsPage = () => {
-  const { data: authUser } = useQuery({ querykey: ["authUser"] });
-  console.log(authUser);
+  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
   const queryClient = useQueryClient();
 
@@ -34,7 +34,7 @@ const NotificationsPage = () => {
     mutationFn: (id) => axiosInstance.delete(`/notifications/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["notifications"]);
-      toast.success("Notifications deleted");
+      toast.success("Notification deleted");
     },
   });
 
@@ -117,14 +117,14 @@ const NotificationsPage = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="col-span-1 lg:col-span-1">
-        <SideBar user={authUser} />
+        <Sidebar user={authUser} />
       </div>
       <div className="col-span-1 lg:col-span-3">
         <div className="bg-white rounded-lg shadow p-6">
           <h1 className="text-2xl font-bold mb-6">Notifications</h1>
 
           {isLoading ? (
-            <p>Loading Notifications</p>
+            <p>Loading notifications...</p>
           ) : notifications && notifications.data.length > 0 ? (
             <ul>
               {notifications.data.map((notification) => (
@@ -203,5 +203,4 @@ const NotificationsPage = () => {
     </div>
   );
 };
-
 export default NotificationsPage;

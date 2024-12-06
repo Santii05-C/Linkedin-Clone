@@ -69,7 +69,7 @@ export const updateProfile = async (req, res) => {
 
     if (req.body.bannerImg) {
       const result = await cloudinary.uploader.upload(req.body.bannerImg);
-      updatedData.profilePicture = result.secure_url;
+      updatedData.bannerImg = result.secure_url;
     }
 
     const user = await User.findByIdAndUpdate(
