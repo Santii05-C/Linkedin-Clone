@@ -52,22 +52,22 @@ const NotificationsPage = () => {
     }
   };
 
-  const renderNotificationContent = (notifications) => {
-    switch (notifications.type) {
+  const renderNotificationContent = (notification) => {
+    switch (notification.type) {
       case "like":
         return (
           <span>
-            <strong>{notifications.relatedUser?.name}</strong> liked your post
+            <strong>{notification.relatedUser?.name}</strong> liked your post
           </span>
         );
       case "comment":
         return (
           <span>
             <Link
-              to={`/profile/${notifications.relatedUser?.username}`}
+              to={`/profile/${notification.relatedUser?.username}`}
               className="font-bold"
             >
-              {notifications.relatedUser?.name}
+              {notification.relatedUser?.name}
             </Link>{" "}
             commented on your post
           </span>
@@ -76,10 +76,10 @@ const NotificationsPage = () => {
         return (
           <span>
             <Link
-              to={`/profile/${notifications.relatedUser.username}`}
+              to={`/profile/${notification.relatedUser.username}`}
               className="font-bold"
             >
-              {notifications.relatedUser?.name}
+              {notification.relatedUser?.name}
             </Link>{" "}
             accepted your connection request
           </span>
@@ -89,24 +89,24 @@ const NotificationsPage = () => {
     }
   };
 
-  const renderRelatedPost = (relatedPost) => {
-    if (!relatedPost) return null;
+  const renderRelatedPost = (relatedPosts) => {
+    if (!relatedPosts) return null;
 
     return (
       <Link
-        to={`/post/${relatedPost._id}`}
+        to={`/post/${relatedPosts._id}`}
         className="mt-2 p-2 bg-gray-50 rounded-md flex items-center space-x-2 hover:bg-gray-100 transition-colors"
       >
-        {relatedPost.image && (
+        {relatedPosts.image && (
           <img
-            src={relatedPost.image}
+            src={relatedPosts.image}
             alt="Post preview"
             className="w-10 h-10 object-cover rounded"
           />
         )}
         <div className="flex-1 overflow-hidden">
           <p className="text-sm text-gray-600 truncate">
-            {relatedPost.content}
+            {relatedPosts.content}
           </p>
         </div>
         <ExternalLink size={14} className="text-gray-400" />
