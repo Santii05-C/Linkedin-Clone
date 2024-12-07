@@ -40,6 +40,7 @@ export const createConnectionAcceptedEmailTemplate = (
   recipientName,
   profileUrl
 ) => `
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

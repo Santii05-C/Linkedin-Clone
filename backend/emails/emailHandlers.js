@@ -47,7 +47,7 @@ export const sendCommentNotificationEmail = async (
     });
     console.log("Comment Notification Email sent successfully", response);
   } catch (error) {
-    throw error;
+    console.error("aca está el error", error);
   }
 };
 
@@ -71,5 +71,8 @@ export const sendConnectionAcceptedEmail = async (
       ),
       category: "connection_accepted",
     });
-  } catch (error) {}
+    console.log("Connection Accepted Email sent successfully", response);
+  } catch (error) {
+    console.error("Error sending connection accepted email:", error);
+  }
 };
