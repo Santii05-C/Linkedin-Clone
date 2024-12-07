@@ -9,7 +9,10 @@ const userSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    profilePicture: { type: String, default: "" },
+    profilePicture: {
+      type: String,
+      default: "",
+    },
     bannerImg: {
       type: String,
       default: "",
@@ -18,8 +21,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "Linkedin User",
     },
-    location: { type: String, default: "Earth" },
-    about: { type: String, default: "" },
+    location: {
+      type: String,
+      default: "Earth",
+    },
+    about: {
+      type: String,
+      default: "",
+    },
     skills: [String],
     experience: [
       {
@@ -34,7 +43,7 @@ const userSchema = new mongoose.Schema(
       {
         school: String,
         fieldOfStudy: String,
-        StartYear: Number,
+        startYear: Number,
         endYear: Number,
       },
     ],

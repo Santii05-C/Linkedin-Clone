@@ -113,7 +113,7 @@ export const createComment = async (req, res) => {
       const newNotification = new Notification({
         recipient: post.author,
         type: "comment",
-        realtedUser: req.user._id,
+        relatedUser: req.user._id,
         relatedPost: postId,
       });
 
@@ -157,7 +157,7 @@ export const likePost = async (req, res) => {
         const newNotification = new Notification({
           recipient: post.author,
           type: "like",
-          realtedUser: userId,
+          relatedUser: userId,
           relatedPost: postId,
         });
         await newNotification.save();
