@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/Sidebar";
+import { UserPlus } from "lucide-react";
 import FriendRequest from "../components/FriendRequest";
 import UserCard from "../components/UserCard";
 
@@ -16,12 +17,12 @@ const NetworkPage = () => {
     queryKey: ["connections"],
     queryFn: () => axiosInstance.get("/connections"),
   });
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="col-span-1 lg:col-span-1">
         <SideBar user={user} />
       </div>
-
       <div className="col-span-1 lg:col-span-3">
         <div className="bg-secondary rounded-lg shadow p-6 mb-6">
           <h1 className="text-2xl font-bold mb-6">My Network</h1>
@@ -37,7 +38,7 @@ const NetworkPage = () => {
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow p-6 text-center mb-6">
-              {/* <UserPlus size={48} className="mx-auto text-gray-400 mb-4" /> */}
+              <UserPlus size={48} className="mx-auto text-gray-400 mb-4" />
               <h3 className="text-xl font-semibold mb-2">
                 No Connection Requests
               </h3>
@@ -58,7 +59,7 @@ const NetworkPage = () => {
                   <UserCard
                     key={connection._id}
                     user={connection}
-                    isConnection={true}
+                    isConnection={false}
                   />
                 ))}
               </div>
@@ -69,5 +70,4 @@ const NetworkPage = () => {
     </div>
   );
 };
-
 export default NetworkPage;
