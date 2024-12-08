@@ -17,6 +17,7 @@ import PostAction from "./PostAction";
 
 const Post = ({ post }) => {
   const { postId } = useParams();
+
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -112,7 +113,6 @@ const Post = ({ post }) => {
                 <h3 className="font-semibold">{post.author.name}</h3>
               </Link>
               <p className="text-xs text-info">{post.author.headline}</p>
-
               <p className="text-xs text-info">
                 {formatDistanceToNow(new Date(post.createdAt), {
                   addSuffix: true,
@@ -159,7 +159,6 @@ const Post = ({ post }) => {
             text={`Comment (${comments.length})`}
             onClick={() => setShowComments(!showComments)}
           />
-
           <PostAction icon={<Share2 size={18} />} text="Share" />
         </div>
       </div>
@@ -218,5 +217,4 @@ const Post = ({ post }) => {
     </div>
   );
 };
-
 export default Post;
