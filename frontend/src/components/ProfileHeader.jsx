@@ -102,9 +102,46 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
             </button>
           </div>
         );
+
+      case "pending":
+        return (
+          <button className={`${baseClass} bg-yellow-500 hover:bg-yellow-600`}>
+            <Clock size={20} className="mr-2" />
+            Pending
+          </button>
+        );
+
+      case "received":
+        return (
+          <div className="flex gap-2 justify-center">
+            <button
+              onClick={() => acceptRequest(connectionStatus.data.requestId)}
+              className={`${baseClass} bg-green-500 hover:bg-green-600`}
+            >
+              Accept
+            </button>
+            <button
+              onClick={() => rejectRequest(connectionStatus.data.requestId)}
+              className={`${baseClass} bg-red-500 hover:bg-red-600`}
+            >
+              Reject
+            </button>
+          </div>
+        );
+
+      default:
+        return (
+          <button
+            onClick={() => sendConnectionRequest(userData._id)}
+            className="bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center"
+          >
+            <UserPlus size={20} className="mr-2" />
+            Connect
+          </button>
+        );
     }
   };
-
+  //5:38
   return <div>ProfileHeader</div>;
 };
 
