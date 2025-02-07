@@ -2,9 +2,7 @@
 
 ![Demo App](/frontend/public/screenshot-for-readme.png)
 
-# You can see it here
-
-[You can see it here](https://linkedin-clone-5stx.onrender.com)
+# [You can see it here](https://linkedin-clone-5stx.onrender.com)
 
 About This Course:
 
