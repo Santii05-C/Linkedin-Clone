@@ -2,8 +2,6 @@ import { MailtrapClient } from "mailtrap";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log(process.env.MAILTRAP_TOKEN);
-console.log(process.env.EMAIL_FROM);
 
 const TOKEN = process.env.MAILTRAP_TOKEN;
 
